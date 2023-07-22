@@ -71,6 +71,9 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Upload</button>
+           <a href="{{route('file.show')}}" class="btn btn-sm btn-success">Downloade File</a>
+
+
 
             @if(Session::has('download_link'))
 
@@ -79,8 +82,8 @@
                     <p>Your download link: <a href="{{ Session::get('download_link') }}">{{ Session::get('download_link') }}</a></p>
                 </div>
             </div>
-
             @endif
+
 
 
 

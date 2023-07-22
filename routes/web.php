@@ -20,3 +20,6 @@ Route::get('/', function () {
 Route::get('/upload',[FileController::class,'create']);
 Route::post('/upload',[FileController::class,'upload'])->name('file.upload');
 Route::get('/share/{id}',[FileController::class,'share'])->name('file.share');
+// Route::get('file/download/{filename}', [App\Http\Controllers\FileController::class, 'download'])->name('file.download');
+Route::get('file/download/{uuid}', [FileController::class, 'download'])->name('file.download');
+Route::get('files/download', [FileController::class, 'showAllFiles'])->name('file.show');

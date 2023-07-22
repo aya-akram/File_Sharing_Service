@@ -16,9 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('path');
             $table->string('url');
+            $table->string('uuid');
+            $table->string('title');
             $table->timestamps();
         });
     }
+
+
 
     /**
      * Reverse the migrations.
