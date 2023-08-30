@@ -29,14 +29,18 @@
             color: blueviolet;
         }
     </style>
+
 </head>
 
-<body>
 
-    <div class="container" id="ww">
+<body> <!-- Add onload event to body -->
+  <div class="container" id="ww">
+  <img   class="rounded mx-auto d-block"  height="100" id="random-image" src="{{asset('assets/downlade.png')}}" class="card-img-top" alt="Random Image">
+
         <h1>File Sharing Service</h1>
         <form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
             @csrf
+
             <div class="col-md-6" id="ee">
                 @if(session('success'))
                 <div class="alert alert-success">
@@ -51,7 +55,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Email to:</label>
                     <input class="form-control" type="email" name="email_to">
@@ -63,7 +67,7 @@
                     <label for="formFile" class="form-label">Your Email:</label>
                     <input class="form-control" type="email" name="email_from">
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Title:</label>
@@ -87,14 +91,14 @@
 
 
 
-
         </form>
 
     </div>
 
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
-
 </html>
+
+

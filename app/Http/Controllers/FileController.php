@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Events\FileDownloaded;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
@@ -30,8 +32,8 @@ class FileController extends Controller
 
         $request->validate([
             'file' => 'required|file',
-            'email_to' => 'required|email',
-            'email_from' => 'required|email',
+            'email_to' => 'email',
+            'email_from' => 'email',
             'title' => 'required|string',
 
         ]);
@@ -48,22 +50,22 @@ class FileController extends Controller
             'title' => $request->title,
         ]);
 
-        $data = [
-            'title' => $request->title,
-            'file_id' => $file->id, // Pass the file's ID to the view
-            'email_from' => $request->email_from
-        ];
-        Mail::send('emails.file', $data, function ($message) use ($data, $request) {
-            $message->to($request->email_to)
-                ->from($data['email_from'])
-                ->subject($data['title']);
-        });
+        // $data = [
+        //     'title' => $request->title,
+        //     'file_id' => $file->id, // Pass the file's ID to the view
+        //     'email_from' => $request->email_from
+        // ];
+        // Mail::send('emails.file', $data, function ($message) use ($data, $request) {
+        //     $message->to($request->email_to)
+        //         ->from($data['email_from'])
+        //         ->subject($data['title']);
+        // });
 
 
         return redirect('/upload')->with([
             'success' => 'File uploaded successfully!',
             // 'download_link' => $url,
-            'download_link' => route('file.download', ['uuid' => $uuid]),
+            'download_link' => URL::signedRoute('file.download', ['uuid' => $uuid]),
 
         ]);
     }
@@ -74,11 +76,20 @@ class FileController extends Controller
         return response()->file(public_path('storage/' . $files->path));
     }
 
+    // public function download($uuid)
+    // {
+    //     $file = File::where('uuid', $uuid)->firstOrFail();
+    //     return response()->download(public_path('storage/' . $file->path));
+    // }
     public function download($uuid)
-    {
-        $file = File::where('uuid', $uuid)->firstOrFail();
-        return response()->download(public_path('storage/' . $file->path));
-    }
+{
+    $file = File::where('uuid', $uuid)->firstOrFail();
+
+    // Trigger the event
+    event(new FileDownloaded($file));
+
+    return response()->download(public_path('storage/' . $file->path));
+}
 
     public function showAllFiles()  {
         $files = File::all();

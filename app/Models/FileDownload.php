@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class File extends Model
+class FileDownload extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'path', 'url','uuid','title','download_count'];
+    protected $fillable = ['ip_address', 'user_agent', 'file_id'];
 
 }

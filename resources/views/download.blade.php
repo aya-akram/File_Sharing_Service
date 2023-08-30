@@ -38,7 +38,7 @@
     @foreach($files as $file)
                 <tr>
                     <th scope="row">{{ $file->id }}</th>
-                    <td><a href="{{ route('file.download', ['uuid' => $file->uuid]) }}">{{ route('file.download', ['uuid' => $file->uuid]) }}</a></td>
+                    <td><a href="{{ URL::signedRoute('file.download', ['uuid' => $file->uuid]) }}">{{ route('file.download', ['uuid' => $file->uuid]) }}</a></td>
                     <td>{{ $file->title }}</td>
                 </tr>
                 @endforeach
